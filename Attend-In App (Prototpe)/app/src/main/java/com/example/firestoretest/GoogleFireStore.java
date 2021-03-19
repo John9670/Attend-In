@@ -53,8 +53,8 @@ public class GoogleFireStore {
                 }
             }
         });
-
     }
+
 
     public void setUserAcc(String name, String id){
         Map<String, String> note = new HashMap<>();
