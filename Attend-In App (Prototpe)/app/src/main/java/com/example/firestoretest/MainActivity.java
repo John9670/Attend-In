@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+    private GoogleFireStore g;
+    private String id;
 
 
 
@@ -16,18 +18,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        g = new GoogleFireStore();
+        id = getIntent().getStringExtra("id");
     }
 
     public void checkInButton (View view){
+        Intent intent = new Intent(getBaseContext(), ClassList.class);
+        intent.putExtra("id",id);
+        startActivity(intent);
 
     }
     public void addClassButton (View view){
-
+        Intent intent = new Intent(getBaseContext(), AddClass.class);
+        intent.putExtra("id",id);
+        startActivity(intent);
     }
 
-    public void othersButton(View view){
-        Intent intent = new Intent(getBaseContext(), MapsActivity.class);
+    public void mkClassButton(View view){
+        Intent intent = new Intent(getBaseContext(), MakeClass.class);
+        intent.putExtra("id",id);
         startActivity(intent);
+
 
     }
 

@@ -7,11 +7,22 @@
     >
 
     <Button
-        android:id="@+id/othersButton"
+        android:id="@+id/mkClassButton2"
         android:layout_width="293dp"
         android:layout_height="54dp"
-        android:text="Others"
-        android:onClick="othersButton"
+        android:text="Class List"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.691" />
+
+    <Button
+        android:id="@+id/mkClassButton"
+        android:layout_width="293dp"
+        android:layout_height="54dp"
+        android:text="MAKE CLASS"
+        android:onClick="mkClassButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,4 +67,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.244" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     public void loginButton(View view) {
         //TODO check if valid signin else ask them for the info again ...
         String name = editTextName.getText().toString();
-        String id = editTextId.getText().toString();
+        final String id = editTextId.getText().toString();
 
         if(name.equals("") || id.equals("")){
             Toast.makeText(LoginActivity.this, "Input Valid Name and Id", Toast.LENGTH_SHORT).show();
@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                     if(success == true){
                         Toast.makeText(LoginActivity.this, "Logging", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                        intent.putExtra("id", id);
                         startActivity(intent);
                     }
                     else {
@@ -76,9 +77,12 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(boolean success){
                     if(!success == true){
                         Toast.makeText(LoginActivity.this, "Making Account", Toast.LENGTH_SHORT).show();
-                        g.setUserAcc(name, id);
-                        Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                        startActivity(intent);
+                        g.setUserAcc(name, id, new GoogleFireStore.OnGetDataListener() {
+                            @Override
+                            public void onComplete(boolean success) {
+                                Toast.makeText(LoginActivity.this, "Please Login", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                     else{
                         Toast.makeText(LoginActivity.this, "Input Valid Id", Toast.LENGTH_SHORT).show();
