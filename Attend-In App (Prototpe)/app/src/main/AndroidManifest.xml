@@ -13,19 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MakeClass"></activity>
-        <activity android:name=".AddClass" />
-        <activity android:name=".CheckedIn" />
-        <activity android:name=".ClassList" />
+        <activity android:name=".MakeClassActivity"/>
+        <activity android:name=".AddClassActivity" />
+        <activity android:name=".CheckedInActivity" />
+        <activity android:name=".ClassListActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MapsActivity" />
+        <activity android:name=".MapsActivity"></activity>
 
         <meta-data
             android:name="com.firebase.ml.cloud.ApiKeyForDebug"

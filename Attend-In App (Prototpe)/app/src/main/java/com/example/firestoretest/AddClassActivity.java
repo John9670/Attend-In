@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class AddClass extends AppCompatActivity {
+public class AddClassActivity extends AppCompatActivity {
     private String id;
     private EditText crn;
     private GoogleFireStore g;

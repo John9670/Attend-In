@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-public class CheckedIn extends AppCompatActivity {
+public class CheckedInActivity extends AppCompatActivity {
     private String id;
 
     @Override

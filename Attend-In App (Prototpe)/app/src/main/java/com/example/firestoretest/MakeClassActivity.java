@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class MakeClass extends AppCompatActivity {
+public class MakeClassActivity extends AppCompatActivity {
     private TextView t1;
     private TextView t2;
     private SimpleDateFormat tm1;
@@ -45,7 +45,7 @@ public class MakeClass extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        MakeClass.this, new TimePickerDialog.OnTimeSetListener() {
+                        MakeClassActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
 
@@ -66,7 +66,7 @@ public class MakeClass extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        MakeClass.this, new TimePickerDialog.OnTimeSetListener() {
+                        MakeClassActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int i, int i1) {
                         Calendar calendar = Calendar.getInstance();
@@ -89,7 +89,7 @@ public class MakeClass extends AppCompatActivity {
             @Override
             public void onComplete(ArrayList<String> success) {
                 g.mkClass(tm1,tm2,lon.getText().toString(),lat.getText().toString(),crn.getText().toString());
-                Toast.makeText(MakeClass.this, "Making Class", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MakeClassActivity.this, "Making Class", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
                 intent.putExtra("id",id);
                 startActivity(intent);

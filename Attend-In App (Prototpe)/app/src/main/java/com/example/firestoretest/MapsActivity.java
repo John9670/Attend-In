@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -18,24 +19,38 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
 
     Location currentLocation;
+    double goalLat;
+    double goalLng;
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
     private String id;
+    private String crn;
+    private String location;
+    private GoogleFireStore g;
+    private  Maps m;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         id = getIntent().getStringExtra("id");
+        location = getIntent().getStringExtra("location");
+        crn = getIntent().getStringExtra("crn");
+        g = new GoogleFireStore();
+        m = new Maps();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
@@ -66,12 +81,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        LatLng latLng= new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("I am Here");
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        googleMap.animateCamera((CameraUpdateFactory.newLatLngZoom(latLng,19f)));
-        googleMap.addMarker(markerOptions);
+    public void onMapReady(final GoogleMap googleMap) {
+        g.getClassLocation(location, new GoogleFireStore.OnGetClassListener() {
+            @Override
+            public void onComplete(ArrayList<String> success) {
+
+                LatLng latLng= new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+                MarkerOptions markerOne = new MarkerOptions().position(latLng).title("I am Here");
+                goalLat = Double.parseDouble(success.get(0));
+                goalLng = Double.parseDouble(success.get(1));
+                MarkerOptions markerTwo = new MarkerOptions().position( new LatLng(Double.parseDouble(success.get(0)),Double.parseDouble(success.get(1)))).title("Goal");
+                Circle circle = googleMap.addCircle(new CircleOptions()
+                        .center(new LatLng(Double.parseDouble(success.get(0)),Double.parseDouble(success.get(1))))
+                        .radius(50)
+                        .strokeColor(Color.RED)
+                        .fillColor(Color.argb(0,225,255,255)));
+                googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                googleMap.animateCamera((CameraUpdateFactory.newLatLngZoom(latLng,19f)));
+                googleMap.addMarker(markerOne).showInfoWindow();
+                googleMap.addMarker(markerTwo);
+            }
+        });
     }
 
     @Override
@@ -85,14 +115,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
     public void refreshButton(View view){
+        //TODO Something
         fetchLastLocation();
 
     }
 
     public void checkInButton(View view){
-        Intent intent = new Intent(getBaseContext(),CheckedIn.class);
-        intent.putExtra("id",id);
-        startActivity(intent);
-
+        g.isValidAttendanceList(crn, new GoogleFireStore.OnGetDataListener() {
+            @Override
+            public void onComplete(boolean success) {
+                if(success){
+                    if(m.validLocation(goalLat,goalLng,currentLocation.getLatitude(),currentLocation.getLongitude())){
+                        g.addAttendanceList(id, crn, new GoogleFireStore.OnGetClassListener() {
+                            @Override
+                            public void onComplete(ArrayList<String> success) {
+                                Intent intent = new Intent(getBaseContext(),CheckedInActivity.class);
+                                intent.putExtra("id",id);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                    else{
+                        Toast.makeText(getApplicationContext(), "You Are Too Far Away", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(), "Class Has Not Started", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

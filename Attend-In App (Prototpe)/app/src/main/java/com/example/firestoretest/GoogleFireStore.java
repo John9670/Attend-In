@@ -14,6 +14,7 @@ import com.google.firebase.firestore.SetOptions;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +80,17 @@ public class GoogleFireStore {
         });
     }
 
+    public void getOwnedClassList(String id,final OnGetClassListener callback){
+        DocumentReference classes = db.collection("Users").document(id);
+        classes.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                ArrayList<String> result = (ArrayList<String>) (task.getResult().get("OwnedClassList"));
+                callback.onComplete(result);
+            }
+        });
+    }
+
     public void addOwnerClass(final String id, final String crn, final  OnGetClassListener callback){
         DocumentReference classes = db.collection("Users").document(id);
         classes.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -103,7 +115,7 @@ public class GoogleFireStore {
         db.collection("Classes").document(crn).set(note);
     }
 
-    //TODO Check if the class is valid (Add isValidClass)
+    //TODO Check if the class is valid (Add isValidClass) (For valid CRN Number and if it already exist inside your own list)
     public  void addClass(final String id, final String crn, final OnGetClassListener callback){
         DocumentReference classes = db.collection("Users").document(id);
         classes.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -115,10 +127,9 @@ public class GoogleFireStore {
                 callback.onComplete(result);
             }
         });
-
     }
 
-    //TODO ADD VALIDATOR FOR ADD CLASS
+    //TODO ADD VALIDATOR FOR ADDCLASS
     public void isValidClass(final String name, String id, final OnGetDataListener callback) {
         DocumentReference user = db.collection("Classes").document(id);
         user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -139,6 +150,18 @@ public class GoogleFireStore {
         });
     }
 
+    public void getClassLocation(String id,final OnGetClassListener callback){
+        DocumentReference classes = db.collection("Classes").document(id);
+        classes.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                ArrayList<String> result =new ArrayList<>();
+                result.add(task.getResult().getString("Latitude"));
+                result.add(task.getResult().getString("Longitude"));
+                callback.onComplete(result);
+            }
+        });
+    }
 
     public void setUserAcc(String name, String id, final OnGetDataListener callback){
         Map<String, String> note = new HashMap<>();
@@ -153,6 +176,76 @@ public class GoogleFireStore {
                 callback.onComplete(true);
             }
         });
-
     }
+
+    public void mkAttendanceList(final String crn, final OnGetDataListener callback){
+        String date = new SimpleDateFormat("MM-dd-yyyy").format(new Date());
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("Attendance", Arrays.asList());
+        db.collection("Classes").document(crn).collection("Attendance").document(date).set(docData, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                callback.onComplete(true);
+            }
+        });
+    }
+
+    public void addAttendanceList(final String id, final String crn, final OnGetClassListener callback) {
+        DocumentReference classes = db.collection("Classes").document(crn).collection("Attendance").document(new SimpleDateFormat("MM-dd-yyyy").format(new Date()));
+        classes.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                ArrayList<String> result = (ArrayList<String>) (task.getResult().get("Attendance"));
+                result.add(id);
+                db.collection("Classes").document(crn).collection("Attendance").document(new SimpleDateFormat("MM-dd-yyyy").format(new Date())).update("Attendance",result);
+                callback.onComplete(result);
+            }
+        });
+    }
+
+    public void isValidAttendanceList(final String crn,  final OnGetDataListener callback) {
+        DocumentReference user = db.collection("Classes").document(crn).collection("Attendance").document(new SimpleDateFormat("MM-dd-yyyy").format(new Date()));
+        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().get("Attendance") == null){
+                        callback.onComplete(false);
+                    }
+                    else{
+                        callback.onComplete(true);
+                    }
+                }
+            }
+        });
+    }
+
+    public void getAttendanceList(final String crn,  final OnGetClassListener callback) {
+        CollectionReference user = db.collection("Classes").document(crn).collection("Attendance");
+        user.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                ArrayList<String> result = new ArrayList<>();
+                if(task.isSuccessful()){
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        result.add(document.getId());
+                    }
+                    callback.onComplete(result);
+                }
+            }
+        });
+    }
+    public void getStudentAttendance(final String crn, final String date ,final OnGetClassListener callback){
+        DocumentReference user = db.collection("Classes").document(crn).collection("Attendance").document(date);
+        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                ArrayList<String> result = (ArrayList<String>) (task.getResult().get("Attendance"));
+                callback.onComplete(result);
+            }
+        });
+    }
+
+    //TODO Add If already checkedin validator
+
 }

@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
     private GoogleFireStore g;
@@ -23,23 +21,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkInButton (View view){
-        Intent intent = new Intent(getBaseContext(), ClassList.class);
+        Intent intent = new Intent(getBaseContext(), ClassListActivity.class);
+        intent.putExtra("list",0);
         intent.putExtra("id",id);
         startActivity(intent);
 
     }
     public void addClassButton (View view){
-        Intent intent = new Intent(getBaseContext(), AddClass.class);
+        Intent intent = new Intent(getBaseContext(), AddClassActivity.class);
         intent.putExtra("id",id);
         startActivity(intent);
     }
 
     public void mkClassButton(View view){
-        Intent intent = new Intent(getBaseContext(), MakeClass.class);
+        Intent intent = new Intent(getBaseContext(), MakeClassActivity.class);
         intent.putExtra("id",id);
         startActivity(intent);
-
-
     }
+
+    public void attendanceButton(View view){
+        Intent intent = new Intent(getBaseContext(),  ClassListActivity.class);
+        intent.putExtra("list",1);
+        intent.putExtra("id",id);
+        startActivity(intent);
+    }
+
+    public void startClassButton(View view){
+        Intent intent = new Intent(getBaseContext(),  ClassListActivity.class);
+        intent.putExtra("list",2);
+        intent.putExtra("id",id);
+        startActivity(intent);
+    }
+
 
 }

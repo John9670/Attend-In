@@ -20,8 +20,6 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleFireStore g;
     private EditText editTextName;
     private EditText editTextId;
-    private Button buttonLogin;
-    private Button buttonSignup;
 
 
     @Override
@@ -32,15 +30,13 @@ public class LoginActivity extends AppCompatActivity {
         //From the login activity I've grabbed the two edit text and labeled to the respective global variables
         editTextName = findViewById(R.id.usernameText);
         editTextId = findViewById(R.id.idText);
-        buttonLogin = findViewById(R.id.loginButton);
-        buttonLogin = findViewById(R.id.signupButton);
         g = new GoogleFireStore();
 
     }
 
     public void loginButton(View view) {
         //TODO check if valid signin else ask them for the info again ...
-        String name = editTextName.getText().toString();
+        final String name = editTextName.getText().toString();
         final String id = editTextId.getText().toString();
 
         if(name.equals("") || id.equals("")){
