@@ -12,7 +12,7 @@
 
         <meta-data
             android:name="com.firebase.ml.cloud.ApiKeyForDebug"
-            android:value="AIzaSyAOIQWmlqbPL7qF8bCiTjWppR_5ceJafwg" />
+            android:value="" />
 
         <activity android:name=".MainActivity">
             <intent-filter>
