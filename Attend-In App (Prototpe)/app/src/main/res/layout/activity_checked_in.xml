@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CheckedIn">
+    >
 
     <TextView
         android:id="@+id/textView2"
+        android:fontFamily="@font/impact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="You are Checked In!!!"
+        android:textColor="@color/colorAccent"
         android:textSize="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,6 +23,7 @@
 
     <Button
         android:id="@+id/button"
+        android:fontFamily="@font/impact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Done"

@@ -7,10 +7,12 @@
     android:layout_height="match_parent"
     android:id="@+id/map"
     tools:context=".MapsActivity"
-    android:name="com.google.android.gms.maps.SupportMapFragment">
+    android:name="com.google.android.gms.maps.SupportMapFragment"
+    >
 
     <Button
         android:onClick="refreshButton"
+        android:fontFamily="@font/impact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|top"
@@ -21,6 +23,7 @@
 
     <Button
         android:onClick="checkInButton"
+        android:fontFamily="@font/impact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"

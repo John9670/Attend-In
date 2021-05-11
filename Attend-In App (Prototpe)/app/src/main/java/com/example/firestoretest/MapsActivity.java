@@ -85,7 +85,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         g.getClassLocation(location, new GoogleFireStore.OnGetClassListener() {
             @Override
             public void onComplete(ArrayList<String> success) {
-
+                googleMap.clear();
                 LatLng latLng= new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
                 MarkerOptions markerOne = new MarkerOptions().position(latLng).title("I am Here");
                 goalLat = Double.parseDouble(success.get(0));
@@ -115,25 +115,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
     public void refreshButton(View view){
-        //TODO Something
         fetchLastLocation();
-
     }
 
     public void checkInButton(View view){
+        //TODO TIME Validator
         g.isValidAttendanceList(crn, new GoogleFireStore.OnGetDataListener() {
             @Override
             public void onComplete(boolean success) {
                 if(success){
                     if(m.validLocation(goalLat,goalLng,currentLocation.getLatitude(),currentLocation.getLongitude())){
-                        g.addAttendanceList(id, crn, new GoogleFireStore.OnGetClassListener() {
+                        g.dupStudentAttendance(crn, id, new GoogleFireStore.OnGetDataListener() {
                             @Override
-                            public void onComplete(ArrayList<String> success) {
-                                Intent intent = new Intent(getBaseContext(),CheckedInActivity.class);
-                                intent.putExtra("id",id);
-                                startActivity(intent);
+                            public void onComplete(boolean success) {
+                                if(success){
+                                    Toast.makeText(getApplicationContext(), "You Have Already Check In", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getBaseContext(),MainActivity.class);
+                                    intent.putExtra("id",id);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    g.addAttendanceList(id, crn, new GoogleFireStore.OnGetClassListener() {
+                                        @Override
+                                        public void onComplete(ArrayList<String> success) {
+                                            Intent intent = new Intent(getBaseContext(),CheckedInActivity.class);
+                                            intent.putExtra("id",id);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                }
                             }
                         });
+
                     }
                     else{
                         Toast.makeText(getApplicationContext(), "You Are Too Far Away", Toast.LENGTH_SHORT).show();

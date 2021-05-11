@@ -34,7 +34,7 @@ public class ClassListActivity extends AppCompatActivity {
             g.getClassList(id, new GoogleFireStore.OnGetClassListener() {
                 @Override
                 public void onComplete(ArrayList<String> success) {
-                    ArrayAdapter arrayAdapter = new ArrayAdapter(ClassListActivity.this, android.R.layout.simple_list_item_1, success);
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(ClassListActivity.this, R.layout.row, success);
                     listView.setAdapter(arrayAdapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -53,7 +53,7 @@ public class ClassListActivity extends AppCompatActivity {
             g.getOwnedClassList(id, new GoogleFireStore.OnGetClassListener() {
                 @Override
                 public void onComplete(ArrayList<String> success) {
-                    ArrayAdapter arrayAdapter = new ArrayAdapter(ClassListActivity.this, android.R.layout.simple_list_item_1, success);
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(ClassListActivity.this,  R.layout.row, success);
                     listView.setAdapter(arrayAdapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
@@ -62,7 +62,7 @@ public class ClassListActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(ArrayList<String> success) {
                                     crn =(String) adapterView.getItemAtPosition(i);
-                                    ArrayAdapter arrayAdapter = new ArrayAdapter(ClassListActivity.this, android.R.layout.simple_list_item_1, success);
+                                    ArrayAdapter arrayAdapter = new ArrayAdapter(ClassListActivity.this,  R.layout.row, success);
                                     listView.setAdapter(arrayAdapter);
                                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                         @Override
@@ -70,7 +70,7 @@ public class ClassListActivity extends AppCompatActivity {
                                             g.getStudentAttendance(crn, (String) adapterView.getItemAtPosition(i), new GoogleFireStore.OnGetClassListener() {
                                                 @Override
                                                 public void onComplete(ArrayList<String> success) {
-                                                    ArrayAdapter arrayAdapter = new ArrayAdapter(ClassListActivity.this, android.R.layout.simple_list_item_1, success);
+                                                    ArrayAdapter arrayAdapter = new ArrayAdapter(ClassListActivity.this,  R.layout.row, success);
                                                     listView.setAdapter(arrayAdapter);
                                                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                                         @Override
@@ -94,7 +94,7 @@ public class ClassListActivity extends AppCompatActivity {
             g.getOwnedClassList(id, new GoogleFireStore.OnGetClassListener() {
                 @Override
                 public void onComplete(ArrayList<String> success) {
-                    ArrayAdapter arrayAdapter = new ArrayAdapter(ClassListActivity.this, android.R.layout.simple_list_item_1, success);
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(ClassListActivity.this,  R.layout.row, success);
                     listView.setAdapter(arrayAdapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override

@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/ic_pencils_apples_wallpaper"
     >
 
     <TextView
         android:id="@+id/textView3"
+        android:fontFamily="@font/impact"
         android:layout_width="293dp"
         android:layout_height="54dp"
         android:gravity="center"
         android:text="Students"
+        android:textColor="@color/colorAccent"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,10 +24,12 @@
 
     <TextView
         android:id="@+id/textView4"
+        android:fontFamily="@font/impact"
         android:layout_width="293dp"
         android:layout_height="54dp"
         android:gravity="center"
         android:text="Teachers"
+        android:textColor="@color/colorAccent"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,8 +39,10 @@
 
     <Button
         android:id="@+id/attendanceButton"
+        android:fontFamily="@font/impact"
         android:layout_width="293dp"
         android:layout_height="54dp"
+        android:textSize="20dp"
         android:onClick="attendanceButton"
         android:text="Attendance"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,8 +53,10 @@
 
     <Button
         android:id="@+id/mkClassButton"
+        android:fontFamily="@font/impact"
         android:layout_width="293dp"
         android:layout_height="54dp"
+        android:textSize="20dp"
         android:onClick="mkClassButton"
         android:text="MAKE CLASS"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -58,8 +67,10 @@
 
     <Button
         android:id="@+id/startClassButton"
+        android:fontFamily="@font/impact"
         android:layout_width="293dp"
         android:layout_height="54dp"
+        android:textSize="20dp"
         android:onClick="startClassButton"
         android:text="Start Class"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -70,9 +81,11 @@
 
     <Button
         android:id="@+id/checkInButton"
+        android:fontFamily="@font/impact"
         android:layout_width="293dp"
         android:layout_height="54dp"
         android:onClick="checkInButton"
+        android:textSize="20dp"
         android:text="Check Me IN"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,8 +95,10 @@
 
     <Button
         android:id="@+id/addClassButton"
+        android:fontFamily="@font/impact"
         android:layout_width="293dp"
         android:layout_height="54dp"
+        android:textSize="20dp"
         android:onClick="addClassButton"
         android:text="Add Class"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -92,18 +107,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.413" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="293dp"
-        android:layout_height="54dp"
-        android:text="Attend-In"
-        android:gravity="center"
-        android:textSize="30dp"
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="223dp"
+        android:layout_height="109dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.069" />
+        app:layout_constraintVertical_bias="0.043"
+        app:srcCompat="@drawable/ic_attend_in" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

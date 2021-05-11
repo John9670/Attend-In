@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MakeClassActivity">
+    tools:context=".MakeClassActivity"
+    >
 
     <TextView
         android:id="@+id/startText"
+        android:fontFamily="@font/impact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/ic_time"
@@ -16,6 +18,7 @@
         android:hint="Start Time"
         android:textSize="32sp"
         android:textStyle="bold"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -25,6 +28,7 @@
 
     <TextView
         android:id="@+id/endText"
+        android:fontFamily="@font/impact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableTop="@drawable/ic_time"
@@ -33,6 +37,7 @@
         android:hint="End Time"
         android:textSize="32sp"
         android:textStyle="bold"
+        android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +46,7 @@
 
     <EditText
         android:id="@+id/lonText"
+        android:fontFamily="@font/impact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Longitude"
@@ -52,6 +58,7 @@
 
     <EditText
         android:id="@+id/latText"
+        android:fontFamily="@font/impact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Latitude"
@@ -64,6 +71,7 @@
 
     <EditText
         android:id="@+id/crnText"
+        android:fontFamily="@font/impact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="CRN Number"
@@ -76,6 +84,7 @@
 
     <Button
         android:id="@+id/confirmButton"
+        android:fontFamily="@font/impact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="confirm"

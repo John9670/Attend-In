@@ -28,10 +28,10 @@
 
         <meta-data
             android:name="com.firebase.ml.cloud.ApiKeyForDebug"
-            android:value="AIzaSyAOIQWmlqbPL7qF8bCiTjWppR_5ceJafwg" />
+            android:value="" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC7caa7DkTxS-IvueE01mSTjtDOZjfhqps" />
+            android:value="" />
     </application>
 
 </manifest>

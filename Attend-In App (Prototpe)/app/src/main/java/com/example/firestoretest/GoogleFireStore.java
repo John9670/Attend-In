@@ -105,17 +105,15 @@ public class GoogleFireStore {
 
     }
 
-    //TODO Check if it already exist
-    public void mkClass(SimpleDateFormat tm1, SimpleDateFormat tm2, String lon, String lat, final String crn){
+    public void mkClass(String startTime, String endTime, String lon, String lat, final String crn){
         Map<String, String> note = new HashMap<>();
-        note.put("Start Time", tm1.format(new Date()));
-        note.put("End Time", tm2.format(new Date()));
+        note.put("Start Time",startTime);
+        note.put("End Time", endTime);
         note.put("Longitude", lon);
         note.put("Latitude", lat);
         db.collection("Classes").document(crn).set(note);
     }
 
-    //TODO Check if the class is valid (Add isValidClass) (For valid CRN Number and if it already exist inside your own list)
     public  void addClass(final String id, final String crn, final OnGetClassListener callback){
         DocumentReference classes = db.collection("Users").document(id);
         classes.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -129,23 +127,50 @@ public class GoogleFireStore {
         });
     }
 
-    //TODO ADD VALIDATOR FOR ADDCLASS
-    public void isValidClass(final String name, String id, final OnGetDataListener callback) {
-        DocumentReference user = db.collection("Classes").document(id);
-        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+    public void isValidClass(final String crn, final OnGetDataListener callback) {
+        CollectionReference user = db.collection("Classes");
+        user.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                ArrayList<String> result = new ArrayList<>();
                 if(task.isSuccessful()){
-                    if(task.getResult().getString("Name") == null){
-                        callback.onComplete(false);
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (crn.equals(document.getId())){
+                            callback.onComplete(true);
+                            return;
+                        }
                     }
-                    else if(task.getResult().getString("Name").equals(name)){
+                    callback.onComplete(false);
+                }
+            }
+        });
+    }
+    public void dupClass(final String id, final String crn, final OnGetDataListener callback){
+        getClassList(id, new OnGetClassListener() {
+            @Override
+            public void onComplete(ArrayList<String> success) {
+                for(String classL : success ){
+                    if (crn.equals(classL)){
                         callback.onComplete(true);
-                    }
-                    else{
-                        callback.onComplete(false);
+                        return;
                     }
                 }
+                callback.onComplete(false);
+            }
+        });
+    }
+
+    public void dupOwnedClass(final String id, final String crn, final OnGetDataListener callback){
+        getOwnedClassList(id, new OnGetClassListener() {
+            @Override
+            public void onComplete(ArrayList<String> success) {
+                for(String classL : success ){
+                    if (crn.equals(classL)){
+                        callback.onComplete(true);
+                        return;
+                    }
+                }
+                callback.onComplete(false);
             }
         });
     }
@@ -246,6 +271,19 @@ public class GoogleFireStore {
         });
     }
 
-    //TODO Add If already checkedin validator
-
+    public void dupStudentAttendance (final String crn,final String id, final OnGetDataListener callback){ //<== TODO Opps
+       getStudentAttendance(crn, new SimpleDateFormat("MM-dd-yyyy").format(new Date()), new OnGetClassListener() {
+           @Override
+           public void onComplete(ArrayList<String> success) {
+               for(String classL : success ){
+                   if (id.equals(classL)){
+                       System.out.println(classL+"<=========================================================");
+                       callback.onComplete(true);
+                       return;
+                   }
+               }
+               callback.onComplete(false);
+           }
+       });
+    }
 }
